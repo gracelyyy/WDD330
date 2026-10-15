@@ -1,72 +1,165 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Discover makeup and beauty products and save your favourites.">
-  <title>Blush Finder | Makeup & Beauty</title>
+  <meta name="theme-color" content="#fff5f8">
+  <meta name="description" content="Discover makeup and beauty products, explore product details, and save your beauty favourites with Blush Finder.">
+  <title>Blush Finder — Your Beauty, Your Way</title>
   <link rel="stylesheet" href="styles.css">
   <script src="app.js" defer></script>
 </head>
 <body>
   <header class="site-header">
-    <a class="logo" href="index.html">blush<span>finder</span></a>
+    <a class="logo" href="#home" aria-label="Blush Finder home">
+      blush<span>finder.</span>
+    </a>
+
     <nav aria-label="Main navigation">
       <a href="#discover">Discover</a>
-      <a href="#favorites">My Favourites</a>
+      <a href="#favorites">Favourites <span id="favorite-count">0</span></a>
     </nav>
   </header>
 
-  <main>
+  <main id="home">
     <section class="hero">
-      <p class="eyebrow">YOUR BEAUTY, YOUR WAY</p>
-      <h1>Find your next <span>beauty favourite.</span></h1>
-      <p>Explore makeup and beauty products all in one place.</p>
-      <a class="primary-button" href="#discover">Explore products</a>
+      <div class="hero-content">
+        <p class="eyebrow">YOUR BEAUTY, YOUR WAY</p>
+        <h1>Find your next <span>beauty favourite.</span></h1>
+        <p class="hero-description">
+          Your little corner of the internet for discovering makeup
+          and beauty products you'll love.
+        </p>
+        <a class="primary-button" href="#discover">Explore the collection ↗</a>
+        <p class="hero-note">Discover it. Love it. Save it.</p>
+      </div>
+
+      <div class="hero-decoration" aria-hidden="true">
+        <div class="decor-circle">
+          <span>♡</span>
+        </div>
+        <div class="decor-card decor-card-one">a little blush</div>
+        <div class="decor-card decor-card-two">your beauty edit ✿</div>
+      </div>
+    </section>
+
+    <section class="intro-strip" aria-label="About Blush Finder">
+      <span>✿ DISCOVER</span>
+      <span>♡ SAVE YOUR FAVOURITES</span>
+      <span>✿ EXPLORE BEAUTY</span>
     </section>
 
     <section id="discover" class="section">
       <div class="section-heading">
-        <p class="eyebrow">THE COLLECTION</p>
-        <h2>Discover products</h2>
+        <p class="eyebrow">THE BEAUTY EDIT</p>
+        <h2>Discover products<span>.</span></h2>
+        <p>Find something new to fall in love with.</p>
       </div>
 
       <form id="search-form" class="search-form">
         <label class="sr-only" for="search-input">Search products</label>
-        <input id="search-input" type="search"
-          placeholder="Search by product or brand...">
-        <button type="submit">Search</button>
+        <input
+          id="search-input"
+          type="search"
+          placeholder="Try lipstick, mascara, Maybelline..."
+          autocomplete="off"
+        >
+        <button class="primary-button search-button" type="submit">
+          Search
+        </button>
       </form>
 
-      <div class="filters">
-        <label for="category-filter">Category</label>
-        <select id="category-filter">
-          <option value="all">All categories</option>
-          <option value="foundation">Foundation</option>
-          <option value="lipstick">Lipstick</option>
-          <option value="mascara">Mascara</option>
-          <option value="blush">Blush</option>
-          <option value="eyeliner">Eyeliner</option>
-        </select>
+      <div class="filter-bar">
+        <div class="filter-group">
+          <label for="category-filter">Category</label>
+          <select id="category-filter">
+            <option value="all">All categories</option>
+            <option value="foundation">Foundation</option>
+            <option value="lipstick">Lipstick</option>
+            <option value="mascara">Mascara</option>
+            <option value="blush">Blush</option>
+            <option value="eyeliner">Eyeliner</option>
+            <option value="eyeshadow">Eyeshadow</option>
+            <option value="nail_polish">Nail polish</option>
+          </select>
+        </div>
+
+        <div class="filter-group">
+          <label for="source-filter">Product source</label>
+          <select id="source-filter">
+            <option value="all">All sources</option>
+            <option value="makeup">The Makeup API</option>
+            <option value="openbeauty">Open Beauty Facts</option>
+          </select>
+        </div>
+
+        <button id="clear-filters" class="text-button" type="button">
+          Clear filters
+        </button>
       </div>
 
-      <p id="status-message" role="status">Welcome to Blush Finder!</p>
+      <div class="results-heading">
+        <h3 id="results-title">Explore the collection</h3>
+        <span id="results-count"></span>
+      </div>
+
+      <p id="status-message" class="status-message" role="status" aria-live="polite">
+        Ready to discover something beautiful?
+      </p>
+
       <div id="product-grid" class="product-grid"></div>
+
+      <div class="load-more-wrap">
+        <button id="load-more" class="secondary-button" type="button" hidden>
+          Load more products
+        </button>
+      </div>
     </section>
 
     <section id="favorites" class="section favorites-section">
       <div class="section-heading">
         <p class="eyebrow">SAVED WITH LOVE</p>
-        <h2>My favourites ♡</h2>
+        <h2>Your favourites<span>.</span></h2>
+        <p>Your personal collection of beauty finds.</p>
       </div>
+
       <div id="favorites-grid" class="product-grid"></div>
+
+      <div id="empty-favorites" class="empty-state">
+        <div class="empty-heart" aria-hidden="true">♡</div>
+        <h3>Your collection starts here.</h3>
+        <p>Tap the heart on any product to save it for later.</p>
+        <a class="secondary-button" href="#discover">Find your favourites</a>
+      </div>
+    </section>
+
+    <section class="about-section">
+      <p class="eyebrow">A LITTLE ABOUT US</p>
+      <h2>Beauty discovery, made simple.</h2>
+      <p>
+        Blush Finder brings together product information from beauty
+        data sources so you can discover products and keep track of
+        the ones you love.
+      </p>
+      <p class="data-note">
+        Product information and images are supplied by external APIs
+        and may be incomplete or unavailable.
+      </p>
     </section>
   </main>
 
-  <footer>
-    <p>Blush Finder · A student web application project</p>
-    <p>Product information is provided by external data sources.</p>
+  <dialog id="product-dialog" class="product-dialog">
+    <button id="close-dialog" class="dialog-close" type="button"
+      aria-label="Close product details">×</button>
+    <div id="dialog-content"></div>
+  </dialog>
+
+  <footer class="site-footer">
+    <a class="logo" href="#home">blush<span>finder.</span></a>
+    <p>Discover your next beauty favourite. ♡</p>
+    <p class="footer-small">
+      Student project · Powered by The Makeup API and Open Beauty Facts
+    </p>
   </footer>
 </body>
 </html>
